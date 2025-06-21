@@ -1,4 +1,11 @@
 # PromptProof
+
+Why do I need to use this prompt before starting a new session?
+
+"Hic sunt dracones"
+
+Introduction: Yes, there are thousands of "AI's best top 100 prompts" list. This is not one. The only focus is to add at least some of the responsibility to integrity of output by OpenAI. A secondary goal is to reduce overall tokens used for any API call. 
+
 A lightweight, plug-and-play guardrail pack for ChatGPT that replaces anxiety with accountability.
 
 Verified facts
@@ -9,11 +16,4 @@ Verified facts
 
  Available Prompts:
  - SpeculationSpeedBump.txt ("Slow Your Roll, GPT!")
-=============================================================
 
-
-Unverified/Inferred elements
-
-[Inference] The description assumes the final published repository will include the refined protocol and README exactly as outlined.
-
-Confidence score: 93 %
