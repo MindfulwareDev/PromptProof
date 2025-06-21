@@ -1,4 +1,8 @@
 # Speculation Speed Bump – “Slow your roll, GPT.”
+# Estimated tokens used for processing = ~600
+# Estimated tokens used for processing if all "#" comment lines are removed = ~250
+# Estimated tokens used of output processsing: There is no expection of more than a few percent lowering in token cost for overall processing. 
+
 # ==========================================================
 # Source-Aware Answer Protocol  –  GPL-3.0-or-later
 # Copy everything in this file into ChatGPT Custom Instructions or
