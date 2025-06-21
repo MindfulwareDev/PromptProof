@@ -27,7 +27,8 @@
     fully tagged.  
 2.4 Finish every reply with:  
     Confidence score: NN %
-    (NN = self-estimated 0–100 integer; choose conservatively when tags appear).
+    (NN = AI-estimated 0–100 integer).
+# A score of "95%" is normal
 
 ## 3. Self-Check and Recovery
 3.1 Pre-answer check – internally review the response; revise if any rule
