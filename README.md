@@ -10,6 +10,8 @@ Verified facts
  Available Prompts:
  - SpeculationSpeedBump.txt ("Slow Your Roll, GPT!")
 =============================================================
+
+
 Unverified/Inferred elements
 
 [Inference] The description assumes the final published repository will include the refined protocol and README exactly as outlined.
