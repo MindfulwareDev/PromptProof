@@ -1,6 +1,6 @@
 # PromptProof
 
-Why do I need to use this prompt before starting a new session?
+Why do I need to use this prompt before starting a new AI session?
 
 "Hic sunt dracones"
 
