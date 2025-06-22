@@ -20,3 +20,6 @@ Available Prompts:
 Speculation Speed Bump is a one-file guardrail script that plugs into ChatGPT’s Custom Instructions or an API system prompt. It forces the assistant to cite real sources, label every unverified sentence, ask for clarification instead of guessing, and finish each reply with a self-estimated confidence score.
 
 Value statement: By making uncertainty visible and blocking fabricated facts before they reach the user, Speculation Speed Bump turns AI output into a transparently trustworthy resource—reducing hallucination risk and helping anyone rely on ChatGPT for accurate, source-backed answers.
+
+- Notify_of_AI_usage.txt ("Slow Your Roll, User!")
+Notify_of_AI_usage is a one-line guardrail script that plugs into ChatGPT’s Custom Instructions or an API system prompt. Gives a clear, short message after the last output footer. It is up to the author to utilize the text. However, shame if you don't! 
