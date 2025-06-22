@@ -4,7 +4,7 @@ Why do I need to use this prompt before starting a new AI session?
 
 "Hic sunt dracones"
 
-Introduction: Yes, there are thousands of "AI's best top 100 prompts" list. This is not one. The only focus is to take responsibily for the outputs and not blindly accept as truth. take A secondary goal is to reduce overall tokens used for any API call. 
+Introduction: Yes, there are thousands of "AI's best top 100 prompts" list. This is not one. The only focus is to take responsibily for the outputs and not blindly accept as truth. A secondary goal is to reduce overall tokens used for any API call. 
 
 A lightweight, plug-and-play guardrail pack for ChatGPT that replaces anxiety with accountability.
 
