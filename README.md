@@ -22,4 +22,16 @@ Speculation Speed Bump is a one-file guardrail script that plugs into ChatGPT’
 Value statement: By making uncertainty visible and blocking fabricated facts before they reach the user, Speculation Speed Bump turns AI output into a transparently trustworthy resource—reducing hallucination risk and helping anyone rely on ChatGPT for accurate, source-backed answers.
 
 - Notify_of_AI_usage.txt ("Slow Your Roll, User!")
-Notify_of_AI_usage is a one-line guardrail script that plugs into ChatGPT’s Custom Instructions or an API system prompt. Gives a clear, short message after the last output footer. It is up to the author to utilize the text. However, shame if you don't! 
+Notify_of_AI_usage is a one-line guardrail script that plugs into ChatGPT’s Custom Instructions or an API system prompt. Gives a clear, short message after the last output footer. It is up to the author to utilize the text. However, shame if you don't!
+
+- Ethical-Guard.txt ("Slow Your Roll, Bad Boy!") The ethics_alert flag is a simple boolean indicator your “Ethical-Guard” uses to signal whether a user request or the model’s own draft response violates any core professional duty.
+	•	"ethics_alert": false
+Everything in the prompt or reply so far passes both the ACM Code of Ethics and duty-of-care principles (Hippocratic, legal, policing, etc.). No further action is needed.
+	•	"ethics_alert": true
+One or more rules have been tripped—e.g. advice that facilitates wrongdoing, breaches of privacy, or misrepresentation. In that case the guard will also supply:
+	1.	acm_sections_triggered: exactly which sections of the ACM Code were violated
+	2.	parallel_oaths: which professional-oath analogies apply (medicine, law, policing, etc.)
+	3.	explanation: a concise rationale for why it’s a breach
+	4.	suggested_remediation: either a refusal template or a safe-completion path
+
+By checking ethics_alert first, your application can enforce or log policy breaches in a structured, auditable way.
