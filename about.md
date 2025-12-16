@@ -1,0 +1,3 @@
+PromptProof is an open-source tool designed to help you test and strengthen the robustness of your local LLM environments. It acts like a local "red-team" framework for running structured attack scenarios against your language model setups. By doing so, it calculates an Attack Success Rate and an Overall Risk Index, giving you clear metrics on how vulnerable your setup might be. It then helps you apply mitigations and measure how much those changes improve your system’s defenses. The tool generates before-and-after HTML reports to visualize the improvements.
+
+In short, PromptProof is a handy way to experiment with LLM guardrails locally and ensure your configurations are as resilient as possible.
