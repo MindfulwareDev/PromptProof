@@ -35,3 +35,16 @@ One or more rules have been tripped—e.g. advice that facilitates wrongdoing, b
 	4.	suggested_remediation: either a refusal template or a safe-completion path
 
 By checking ethics_alert first, your application can enforce or log policy breaches in a structured, auditable way.
+
+### New Prompt Modules
+
+- PromptInjectionTripwire.txt protects against instruction override attempts, hidden prompt extraction, and jailbreak framing.
+- RoleBoundaryLock.txt keeps the model inside its declared role and blocks unsafe persona drift.
+- SourceChainEnforcer.txt requires evidence labels and uncertainty markers for factual claims.
+- DataExfilShield.txt blocks attempts to reveal secrets, credentials, hidden prompts, and protected data.
+- HighRiskActionGate.txt adds caution for medical, legal, financial, cyber, and physical safety topics.
+- ToolUseSanityCheck.txt checks whether tool actions are aligned, scoped, and reversible.
+- AmbiguityBrake.txt slows the model down when the request lacks key constraints.
+- ManipulationToneFilter.txt detects urgency pressure, intimidation, and social engineering cues.
+- MemoryScopeLimiter.txt narrows carryover context to material relevant to the present task.
+- OutputContractVerifier.txt runs a final compliance pass before the answer is delivered.
