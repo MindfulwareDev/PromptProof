@@ -1,10 +1,33 @@
+<div align="center">
+
 # PromptProof
 
-> "Hic sunt dracones" — Here be dragons.
+**Plug-and-play guardrails for any LLM**
 
-**Why do I need to use this prompt before starting a new AI session?**
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![GitHub stars](https://img.shields.io/github/stars/MindfulwareDev/PromptProof?style=social)](https://github.com/MindfulwareDev/PromptProof/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/MindfulwareDev/PromptProof?style=social)](https://github.com/MindfulwareDev/PromptProof/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/MindfulwareDev/PromptProof)](https://github.com/MindfulwareDev/PromptProof/issues)
+[![GitHub last commit](https://img.shields.io/github/last-commit/MindfulwareDev/PromptProof)](https://github.com/MindfulwareDev/PromptProof/commits/main)
+[![Guards](https://img.shields.io/badge/guards-60%2B-brightgreen)](https://github.com/MindfulwareDev/PromptProof/tree/main/guards)
+[![Profiles](https://img.shields.io/badge/profiles-8-orange)](https://github.com/MindfulwareDev/PromptProof/tree/main/profiles)
+[![Tests](https://img.shields.io/badge/adversarial_tests-44-red)](https://github.com/MindfulwareDev/PromptProof/tree/main/tests)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 
-Yes, there are thousands of "AI's best top 100 prompts" lists. This is not one. The only focus is to take responsibility for the outputs and not blindly accept them as truth. A secondary goal is to reduce overall tokens used for any API call.
+*60+ guardrail prompts | 8 preset profiles | CLI tools | adversarial test suite*
+*OpenAI, Anthropic, Ollama, LangChain & LlamaIndex integrations*
+
+[Guards](#guard-library-guards) | [Tools](#tools-tools) | [Profiles](#preset-profiles-profiles) | [Tests](#adversarial-test-suite-tests) | [Integrations](#integration-templates-integrations)
+
+</div>
+
+---
+
+> *"Hic sunt dracones"* — Here be dragons.
+
+**Why do I need to use this before starting a new AI session?**
+
+There are thousands of "AI's best top 100 prompts" lists. This is not one. The only focus is to take responsibility for the outputs and not blindly accept them as truth. A secondary goal is to reduce overall tokens used for any API call.
 
 PromptProof is a lightweight, plug-and-play guardrail pack for any LLM that replaces anxiety with accountability.
 
@@ -14,6 +37,19 @@ PromptProof is a lightweight, plug-and-play guardrail pack for any LLM that repl
 - **What it does** — Forces the assistant to cite sources, label every unverified claim, separate facts from speculation, enforce ethical boundaries, and finish each reply with a self-estimated confidence score — so users always know what is certain and what is not.
 - **Why it matters** — By adding these guardrails, PromptProof reduces the risk of hallucinations, prompt injection, data leaks, and unethical outputs, giving everyday users a clear, transparent basis for trusting (or double-checking) AI answers.
 - **How to use** — Copy any prompt block into your LLM's settings or API setup, save, and start chatting with guardrails active. No extra software or coding is required. Mix and match guards to fit your needs.
+
+### Quick Start
+
+```bash
+# Lint your existing system prompt
+echo "You are a helpful assistant." | python tools/lint_prompt.py --stdin
+
+# Combine guards from a preset profile
+python tools/combine.py --profile developer --output my_prompt.txt
+
+# Run adversarial tests against your setup
+python tests/run_tests.py --provider openai --model gpt-4 --profile maximum-security --report
+```
 
 ---
 
@@ -402,16 +438,38 @@ PromptProof/
 
 ## Contributing
 
-1. Fork the repo
-2. Create a new guard file following the existing format (header with name, estimated tokens, category, then the directive)
-3. Place it in the appropriate `guards/<category>/` directory
-4. Run the linter on your guard: `python tools/lint_prompt.py your_guard.md`
-5. Submit a pull request with a clear description of what the guard does and why it's needed
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-To add new adversarial tests, create a JSON file in `tests/adversarial/` following the existing format.
+**Quick version:**
+1. Fork the repo
+2. Create a new guard file following the existing format
+3. Place it in the appropriate `guards/<category>/` directory
+4. Run the linter: `python tools/lint_prompt.py your_guard.md`
+5. Submit a pull request
+
+---
+
+## Related Projects
+
+If you find PromptProof useful, you might also be interested in:
+- [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) — Security risks for LLM applications
+- [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) — Federal guidelines for AI risk
+- [ACM Code of Ethics](https://www.acm.org/code-of-ethics) — The ethics framework behind Ethical-Guard
 
 ---
 
 ## License
 
 GPL v3 — see [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+
+**If PromptProof helps you build safer AI, consider giving it a star!**
+
+[![Star this repo](https://img.shields.io/github/stars/MindfulwareDev/PromptProof?style=social)](https://github.com/MindfulwareDev/PromptProof)
+
+Made with care by [MindfulwareDev](https://github.com/MindfulwareDev)
+
+</div>
