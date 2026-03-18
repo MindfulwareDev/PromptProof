@@ -1,0 +1,2 @@
+cd /Users/daniel/PromptProof
+
