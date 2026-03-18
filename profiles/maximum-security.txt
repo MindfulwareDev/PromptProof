@@ -1,0 +1,19 @@
+# Profile: Maximum Security
+# Focus: All safety guards active — for high-risk or regulated environments
+# Estimated combined tokens: ~3500
+
+guards/safety/01-prompt-injection-shield.md
+guards/safety/02-pii-redactor.md
+guards/safety/03-jailbreak-circuit-breaker.md
+guards/safety/04-data-exfiltration-blocker.md
+guards/safety/05-secret-keeper.md
+guards/safety/06-code-execution-sandbox.md
+guards/safety/07-social-engineering-detector.md
+guards/safety/48-multi-modal-safety-guard.md
+guards/safety/49-rate-limiting-abuse-detector.md
+guards/quality/10-hallucination-tripwire.md
+guards/quality/12-contradiction-catcher.md
+guards/transparency/16-uncertainty-quantifier.md
+guards/transparency/19-confidence-calibration.md
+guards/behavioral/28-persona-integrity-lock.md
+guards/behavioral/29-refusal-grace-protocol.md

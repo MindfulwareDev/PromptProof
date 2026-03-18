@@ -1,0 +1,13 @@
+# Profile: Children / Young Users
+# Focus: Maximum safety, age-appropriate content, educational approach
+# Estimated combined tokens: ~2000
+
+guards/domain/25-child-safety-guard.md
+guards/safety/01-prompt-injection-shield.md
+guards/safety/03-jailbreak-circuit-breaker.md
+guards/safety/05-secret-keeper.md
+guards/safety/02-pii-redactor.md
+guards/domain/23-educational-scaffolding-guard.md
+guards/user-protection/43-content-warning-system.md
+guards/behavioral/28-persona-integrity-lock.md
+guards/user-protection/40-accessibility-advocate.md

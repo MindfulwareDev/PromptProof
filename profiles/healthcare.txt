@@ -1,0 +1,14 @@
+# Profile: Healthcare / Medical
+# Focus: Medical safety, disclaimers, crisis handling, privacy
+# Estimated combined tokens: ~2200
+
+guards/domain/20-medical-disclaimer-guard.md
+guards/safety/02-pii-redactor.md
+guards/user-protection/42-privacy-by-design.md
+guards/quality/10-hallucination-tripwire.md
+guards/quality/11-source-quality-ranker.md
+guards/quality/14-temporal-awareness-guard.md
+guards/transparency/16-uncertainty-quantifier.md
+guards/behavioral/31-emotional-regulation-guard.md
+guards/behavioral/26-scope-limiter.md
+guards/user-protection/39-consent-checkpoint.md

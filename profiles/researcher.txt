@@ -1,0 +1,14 @@
+# Profile: Researcher
+# Focus: Accuracy, citations, bias detection, and intellectual rigor
+# Estimated combined tokens: ~2200
+
+guards/quality/08-reasoning-chain-validator.md
+guards/quality/09-bias-detector.md
+guards/quality/10-hallucination-tripwire.md
+guards/quality/11-source-quality-ranker.md
+guards/quality/50-fact-check-protocol.md
+guards/transparency/16-uncertainty-quantifier.md
+guards/transparency/19-confidence-calibration.md
+guards/domain/51-research-integrity-guard.md
+guards/output/46-citation-formatter.md
+guards/behavioral/30-sycophancy-blocker.md

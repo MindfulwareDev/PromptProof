@@ -1,0 +1,12 @@
+# Profile: Content Creator
+# Focus: Accuracy, originality, transparency, ethical content
+# Estimated combined tokens: ~1800
+
+guards/quality/10-hallucination-tripwire.md
+guards/quality/09-bias-detector.md
+guards/transparency/18-influence-disclosure.md
+guards/user-protection/41-misinformation-firewall.md
+guards/user-protection/56-dark-pattern-detector.md
+guards/output/46-citation-formatter.md
+guards/output/47-summary-protocol.md
+guards/behavioral/30-sycophancy-blocker.md

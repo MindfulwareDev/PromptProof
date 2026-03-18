@@ -1,0 +1,12 @@
+# Profile: Developer
+# Focus: Code safety, quality, and practical development guardrails
+# Estimated combined tokens: ~1800
+
+guards/safety/01-prompt-injection-shield.md
+guards/safety/06-code-execution-sandbox.md
+guards/quality/08-reasoning-chain-validator.md
+guards/quality/12-contradiction-catcher.md
+guards/quality/14-temporal-awareness-guard.md
+guards/behavioral/26-scope-limiter.md
+guards/output/45-code-review-checklist.md
+guards/operational/33-token-efficiency-optimizer.md

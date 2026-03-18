@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "description": "Reference benchmark scores showing guard effectiveness across test categories",
+    "note": "These are estimated reference scores based on guard design analysis. Run benchmark.py against your own setup for actual measurements.",
+    "scoring": "Percentage of test prompts where the model exhibited expected safe behavior",
+    "categories": [
+      "injection",
+      "jailbreak",
+      "pii",
+      "hallucination",
+      "social_engineering",
+      "extraction",
+      "domain",
+      "code_safety"
+    ]
+  },
+  "baseline_no_guards": {
+    "description": "Typical LLM behavior without any guardrails (varies by model)",
+    "scores": {
+      "injection": 40,
+      "jailbreak": 50,
+      "pii": 30,
+      "hallucination": 20,
+      "social_engineering": 45,
+      "extraction": 25,
+      "domain": 35,
+      "code_safety": 40
+    },
+    "overall": 36
+  },
+  "profiles": {
+    "developer": {
+      "description": "Developer profile with code safety and quality guards",
+      "expected_scores": {
+        "injection": 85,
+        "jailbreak": 65,
+        "pii": 45,
+        "hallucination": 70,
+        "social_engineering": 55,
+        "extraction": 60,
+        "domain": 50,
+        "code_safety": 90
+      },
+      "expected_overall": 65
+    },
+    "researcher": {
+      "description": "Researcher profile with accuracy and citation guards",
+      "expected_scores": {
+        "injection": 50,
+        "jailbreak": 55,
+        "pii": 40,
+        "hallucination": 90,
+        "social_engineering": 50,
+        "extraction": 45,
+        "domain": 60,
+        "code_safety": 50
+      },
+      "expected_overall": 55
+    },
+    "maximum-security": {
+      "description": "All safety guards active — maximum protection",
+      "expected_scores": {
+        "injection": 95,
+        "jailbreak": 90,
+        "pii": 90,
+        "hallucination": 85,
+        "social_engineering": 85,
+        "extraction": 95,
+        "domain": 70,
+        "code_safety": 90
+      },
+      "expected_overall": 88
+    },
+    "customer-support": {
+      "description": "Customer support with PII protection and emotional handling",
+      "expected_scores": {
+        "injection": 85,
+        "jailbreak": 60,
+        "pii": 85,
+        "hallucination": 50,
+        "social_engineering": 55,
+        "extraction": 85,
+        "domain": 50,
+        "code_safety": 45
+      },
+      "expected_overall": 64
+    },
+    "children": {
+      "description": "Maximum safety for young users",
+      "expected_scores": {
+        "injection": 90,
+        "jailbreak": 90,
+        "pii": 85,
+        "hallucination": 55,
+        "social_engineering": 70,
+        "extraction": 85,
+        "domain": 55,
+        "code_safety": 65
+      },
+      "expected_overall": 74
+    },
+    "healthcare": {
+      "description": "Healthcare with medical disclaimers and privacy",
+      "expected_scores": {
+        "injection": 50,
+        "jailbreak": 50,
+        "pii": 90,
+        "hallucination": 85,
+        "social_engineering": 50,
+        "extraction": 50,
+        "domain": 95,
+        "code_safety": 45
+      },
+      "expected_overall": 64
+    }
+  },
+  "individual_guards": {
+    "01-prompt-injection-shield": {
+      "primary_category": "injection",
+      "expected_improvement": "+45% on injection tests"
+    },
+    "03-jailbreak-circuit-breaker": {
+      "primary_category": "jailbreak",
+      "expected_improvement": "+35% on jailbreak tests"
+    },
+    "02-pii-redactor": {
+      "primary_category": "pii",
+      "expected_improvement": "+50% on PII tests"
+    },
+    "10-hallucination-tripwire": {
+      "primary_category": "hallucination",
+      "expected_improvement": "+40% on hallucination tests"
+    },
+    "05-secret-keeper": {
+      "primary_category": "extraction",
+      "expected_improvement": "+55% on extraction tests"
+    },
+    "20-medical-disclaimer-guard": {
+      "primary_category": "domain",
+      "expected_improvement": "+45% on domain safety tests (medical)"
+    },
+    "06-code-execution-sandbox": {
+      "primary_category": "code_safety",
+      "expected_improvement": "+40% on code safety tests"
+    }
+  }
+}

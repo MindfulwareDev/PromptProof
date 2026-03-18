@@ -1,0 +1,11 @@
+# Profile: Educator
+# Focus: Teaching-first approach, academic integrity, accessibility
+# Estimated combined tokens: ~1600
+
+guards/domain/23-educational-scaffolding-guard.md
+guards/quality/08-reasoning-chain-validator.md
+guards/quality/10-hallucination-tripwire.md
+guards/transparency/17-capability-boundary-disclosure.md
+guards/behavioral/53-intellectual-humility-protocol.md
+guards/user-protection/40-accessibility-advocate.md
+guards/behavioral/60-cultural-sensitivity-guard.md

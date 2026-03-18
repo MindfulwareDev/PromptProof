@@ -207,12 +207,208 @@ Each guard file includes an estimated token count in its header. Most guards use
 
 ---
 
+## Tools (`tools/`)
+
+### Guard Combiner CLI
+
+Combines multiple guard files into a single system prompt with token counting and budget warnings.
+
+```bash
+# List all available guards with token counts
+python tools/combine.py --list-guards
+
+# List available profiles
+python tools/combine.py --list-profiles
+
+# Combine guards from a profile
+python tools/combine.py --profile developer
+
+# Combine specific guards with a token budget
+python tools/combine.py --guards safety/01 quality/10 transparency/16 --budget 2000
+
+# Save combined prompt to a file
+python tools/combine.py --profile maximum-security --output system_prompt.txt
+
+# Budget presets: small (1K), medium (2K), standard (4K), large (8K), xlarge (16K)
+python tools/combine.py --profile researcher --budget standard
+```
+
+### Prompt Linter
+
+Analyzes any system prompt for common weaknesses and produces a scored security report. Works on any prompt — not just PromptProof guards.
+
+```bash
+# Lint a prompt file
+python tools/lint_prompt.py my_system_prompt.txt
+
+# Lint from stdin
+echo "You are a helpful assistant." | python tools/lint_prompt.py --stdin
+
+# Output as JSON (for CI/CD pipelines)
+python tools/lint_prompt.py my_prompt.txt --json > report.json
+```
+
+The linter checks for 14 categories including: injection protection, hallucination controls, PII handling, secret protection, crisis handling, domain disclaimers, bias awareness, and more. Each check is rated CRITICAL, HIGH, MEDIUM, LOW, or INFO, and the overall score (0-100) grades your prompt as STRONG, MODERATE, WEAK, or VULNERABLE.
+
+### Benchmark Runner
+
+Measures guard effectiveness by running adversarial test prompts against an LLM with and without guards, comparing pass rates.
+
+```bash
+# Dry run — list all tests without API calls
+python tools/benchmark.py --dry-run --guard guards/safety/01-prompt-injection-shield.md
+
+# Run against OpenAI
+python tools/benchmark.py --provider openai --model gpt-4 --guard guards/safety/01-prompt-injection-shield.md
+
+# Run against Anthropic
+python tools/benchmark.py --provider anthropic --model claude-sonnet-4-20250514 --profile developer
+
+# Run against local Ollama
+python tools/benchmark.py --provider ollama --model llama3 --profile maximum-security
+
+# Save results as JSON
+python tools/benchmark.py --provider openai --model gpt-4 --profile developer --json -o results.json
+```
+
+---
+
+## Adversarial Test Suite (`tests/`)
+
+44 adversarial test prompts across 8 categories, designed to probe LLM vulnerabilities:
+
+| Category | Tests | What it probes |
+|----------|-------|----------------|
+| `injection` | 8 | Prompt injection and instruction override attempts |
+| `jailbreak` | 6 | DAN, hypothetical framing, grandma exploit, developer mode |
+| `pii` | 5 | PII echoing, generation, and extraction |
+| `hallucination` | 6 | Fabricated citations, future events, fake entities |
+| `social_engineering` | 5 | Authority impersonation, urgency pressure, emotional manipulation |
+| `extraction` | 7 | System prompt disclosure and extraction techniques |
+| `domain` | 6 | Medical, legal, financial safety and crisis handling |
+| `code_safety` | 6 | Dangerous code generation, injection vectors, malware |
+
+```bash
+# List all test suites
+python tests/run_tests.py --list
+
+# Run all tests with HTML report
+python tests/run_tests.py --provider openai --model gpt-4 --profile developer --report
+
+# Run a specific test category
+python tests/run_tests.py --provider openai --model gpt-4 --profile maximum-security --category injection
+```
+
+The HTML report shows before/after comparisons with per-category breakdowns and details on failed tests.
+
+---
+
+## Preset Profiles (`profiles/`)
+
+Pre-built guard combinations for common use cases. Each profile is a curated set of guards that work well together.
+
+| Profile | Guards | Focus |
+|---------|--------|-------|
+| `developer` | 8 | Code safety, quality, reasoning, token efficiency |
+| `researcher` | 10 | Accuracy, citations, bias detection, intellectual rigor |
+| `educator` | 7 | Teaching-first approach, accessibility, cultural sensitivity |
+| `customer-support` | 9 | PII protection, emotional handling, multi-language, consistency |
+| `children` | 9 | Maximum safety, age-appropriate content, education |
+| `healthcare` | 10 | Medical disclaimers, privacy, crisis handling, uncertainty |
+| `content-creator` | 8 | Accuracy, misinformation prevention, ethical content |
+| `maximum-security` | 15 | All safety guards active — for regulated environments |
+
+```bash
+# Use a profile with the combiner
+python tools/combine.py --profile developer --output my_prompt.txt
+
+# Benchmark a profile
+python tools/benchmark.py --provider openai --model gpt-4 --profile maximum-security
+```
+
+---
+
+## Integration Templates (`integrations/`)
+
+Ready-to-use code for wiring PromptProof guards into popular LLM frameworks. Each template includes guard loading, profile support, streaming, and conversation history.
+
+| File | Provider | Dependencies |
+|------|----------|-------------|
+| `openai_integration.py` | OpenAI (GPT-4, GPT-4o, etc.) | `pip install openai` |
+| `anthropic_integration.py` | Anthropic (Claude) | `pip install anthropic` |
+| `ollama_integration.py` | Ollama (local LLMs) | None (uses urllib) |
+| `langchain_integration.py` | LangChain (any provider) | `pip install langchain langchain-openai` |
+| `llamaindex_integration.py` | LlamaIndex (RAG pipelines) | `pip install llama-index` |
+
+Each integration supports:
+- Loading single guards or full profiles
+- Streaming and non-streaming responses
+- Conversation history management
+- Interactive chat loop for testing
+
+```bash
+# Run the OpenAI integration demo
+export OPENAI_API_KEY=sk-...
+python integrations/openai_integration.py
+
+# Run with local Ollama (no API key needed)
+python integrations/ollama_integration.py
+```
+
+---
+
+## Benchmarks (`benchmarks/`)
+
+Reference scores and generated reports live here.
+
+- `reference-scores.json` — Estimated effectiveness scores for each profile and individual guards across test categories. Use as a baseline to compare your own benchmark results.
+- `report.html` — Generated by the test runner with `--report` flag. Visual before/after comparison.
+
+---
+
+## Project Structure
+
+```
+PromptProof/
+├── guards/                    # 60 guardrail prompt files
+│   ├── safety/                # Injection, PII, jailbreak protection
+│   ├── quality/               # Hallucination, bias, reasoning checks
+│   ├── transparency/          # Audit trails, uncertainty, disclosure
+│   ├── domain/                # Medical, legal, financial, education
+│   ├── behavioral/            # Scope, consistency, refusal, empathy
+│   ├── operational/           # Efficiency, error handling, formatting
+│   ├── user-protection/       # Privacy, accessibility, content warnings
+│   └── output/                # Structured output, citations, diffs
+├── profiles/                  # Pre-built guard combinations
+├── tools/                     # CLI utilities
+│   ├── combine.py             # Guard combiner with token budgets
+│   ├── lint_prompt.py         # System prompt security linter
+│   └── benchmark.py           # Guard effectiveness benchmarker
+├── tests/
+│   ├── adversarial/           # 44 adversarial test prompts (JSON)
+│   └── run_tests.py           # Test runner with HTML reporting
+├── integrations/              # Drop-in code for OpenAI, Anthropic, Ollama, LangChain, LlamaIndex
+├── benchmarks/                # Reference scores and generated reports
+├── SpeculationSpeedBump.txt   # Original guard
+├── Ethical-Guard              # Original guard
+├── Notify_of_AI_usage         # Original guard
+├── Resource_Maximizer         # Original prompt
+├── about.md                   # Project description
+├── LICENSE                    # GPL v3
+└── README.md                  # This file
+```
+
+---
+
 ## Contributing
 
 1. Fork the repo
 2. Create a new guard file following the existing format (header with name, estimated tokens, category, then the directive)
 3. Place it in the appropriate `guards/<category>/` directory
-4. Submit a pull request with a clear description of what the guard does and why it's needed
+4. Run the linter on your guard: `python tools/lint_prompt.py your_guard.md`
+5. Submit a pull request with a clear description of what the guard does and why it's needed
+
+To add new adversarial tests, create a JSON file in `tests/adversarial/` following the existing format.
 
 ---
 

@@ -1,0 +1,13 @@
+# Profile: Customer Support
+# Focus: Helpful interactions, emotional awareness, scope control, consistency
+# Estimated combined tokens: ~1800
+
+guards/safety/01-prompt-injection-shield.md
+guards/safety/05-secret-keeper.md
+guards/safety/02-pii-redactor.md
+guards/behavioral/27-task-focus-enforcer.md
+guards/behavioral/29-refusal-grace-protocol.md
+guards/behavioral/31-emotional-regulation-guard.md
+guards/behavioral/32-multi-turn-consistency.md
+guards/operational/36-output-format-negotiator.md
+guards/operational/38-language-detection-responder.md
