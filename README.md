@@ -9,12 +9,12 @@
 [![GitHub forks](https://img.shields.io/github/forks/MindfulwareDev/PromptProof?style=social)](https://github.com/MindfulwareDev/PromptProof/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/MindfulwareDev/PromptProof)](https://github.com/MindfulwareDev/PromptProof/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/MindfulwareDev/PromptProof)](https://github.com/MindfulwareDev/PromptProof/commits/main)
-[![Guards](https://img.shields.io/badge/guards-60%2B-brightgreen)](https://github.com/MindfulwareDev/PromptProof/tree/main/guards)
+[![Guards](https://img.shields.io/badge/guards-80%2B-brightgreen)](https://github.com/MindfulwareDev/PromptProof/tree/main/guards)
 [![Profiles](https://img.shields.io/badge/profiles-8-orange)](https://github.com/MindfulwareDev/PromptProof/tree/main/profiles)
 [![Tests](https://img.shields.io/badge/adversarial_tests-44-red)](https://github.com/MindfulwareDev/PromptProof/tree/main/tests)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 
-*60+ guardrail prompts | 8 preset profiles | CLI tools | adversarial test suite*
+*80+ guardrail prompts | 9 categories | 8 preset profiles | CLI tools | adversarial test suite*
 *OpenAI, Anthropic, Ollama, LangChain & LlamaIndex integrations*
 
 [Guards](#guard-library-guards) | [Tools](#tools-tools) | [Profiles](#preset-profiles-profiles) | [Tests](#adversarial-test-suite-tests) | [Integrations](#integration-templates-integrations)
@@ -81,7 +81,7 @@ python tests/run_tests.py --provider openai --model gpt-4 --profile maximum-secu
 
 ## Guard Library (`guards/`)
 
-50 new guardrail prompts organized into 8 categories. Each guard is self-contained — copy it into your system prompt as-is, or combine multiple guards for layered protection.
+70 guardrail prompts organized into 9 categories. Each guard is self-contained — copy it into your system prompt as-is, or combine multiple guards for layered protection.
 
 ### Safety & Security (`guards/safety/`)
 
@@ -198,6 +198,33 @@ Guards that enforce structured, consistent, and useful output formats.
 | 46 | `citation-formatter.md` | Consistent citation formatting with honesty categories (verified, inferred, user-provided). |
 | 47 | `summary-protocol.md` | Structured summarization with compression rules and multiple depth levels. |
 | 54 | `diff-output-protocol.md` | Shows changes in diff format for clarity when modifying existing content. |
+
+### RAG (Retrieval-Augmented Generation) (`guards/rag/`)
+
+Guards specifically designed for RAG pipelines — ensuring retrieved context is faithfully used, properly cited, and free from poisoning, staleness, and access control violations. Contributed by **Daniel Joye**.
+
+| # | File | Description |
+|---|------|-------------|
+| 61 | `retrieval-faithfulness-guard.md` | Ensures every generated claim is grounded in retrieved context with attribution and conflict handling. |
+| 62 | `chunk-relevance-validator.md` | Scores retrieved chunks on a 4-tier relevance scale and discards irrelevant results before generation. |
+| 63 | `context-window-overflow-protector.md` | Prevents quality degradation from context stuffing by budgeting, prioritizing, and transparently trimming chunks. |
+| 64 | `source-staleness-detector.md` | Detects and discloses outdated retrieved documents with domain-specific freshness thresholds. |
+| 65 | `embedding-hallucination-filter.md` | Guards against false confidence from high similarity scores that don't reflect factual relevance. |
+| 66 | `document-scope-enforcer.md` | Restricts answers to the ingested corpus and prevents silent fallback to general knowledge. |
+| 67 | `citation-traceability-protocol.md` | Enforces full inline citation traceability from claims back to source documents and chunk IDs. |
+| 68 | `multi-document-conflict-resolver.md` | Surfaces and resolves conflicts between retrieved documents using recency, specificity, and authority. |
+| 69 | `query-decomposition-guard.md` | Decomposes complex multi-faceted queries into atomic sub-queries for more accurate retrieval. |
+| 70 | `retrieval-poisoning-shield.md` | Defends against adversarial content injected into the document corpus to manipulate RAG outputs. |
+| 71 | `answer-completeness-checker.md` | Verifies that responses fully address the query using all relevant retrieved information. |
+| 72 | `hybrid-search-quality-gate.md` | Validates and reconciles results from combined semantic and keyword retrieval methods. |
+| 73 | `metadata-filter-integrity-guard.md` | Ensures metadata filters (department, date, access level) are correctly enforced during retrieval. |
+| 74 | `chunking-boundary-awareness.md` | Detects and compensates for information loss caused by poor document chunking at segment boundaries. |
+| 75 | `retrieval-latency-quality-tradeoff.md` | Balances retrieval thoroughness against response latency with tiered strategies and user control. |
+| 76 | `pii-in-retrieval-scrubber.md` | Detects and redacts PII found in retrieved documents before including content in responses. |
+| 77 | `knowledge-base-version-control.md` | Tracks and discloses the version state and freshness of the knowledge base used for retrieval. |
+| 78 | `multi-modal-retrieval-guard.md` | Handles non-text content (tables, images, diagrams, OCR) retrieved alongside text passages. |
+| 79 | `conversational-rag-memory-guard.md` | Manages context provenance across multi-turn RAG conversations, preventing memory contamination. |
+| 80 | `retrieval-access-control-enforcer.md` | Enforces document-level access controls, blocking unauthorized content from appearing in responses. |
 
 ---
 
@@ -406,7 +433,7 @@ Reference scores and generated reports live here.
 
 ```
 PromptProof/
-├── guards/                    # 60 guardrail prompt files
+├── guards/                    # 80 guardrail prompt files
 │   ├── safety/                # Injection, PII, jailbreak protection
 │   ├── quality/               # Hallucination, bias, reasoning checks
 │   ├── transparency/          # Audit trails, uncertainty, disclosure
@@ -414,7 +441,8 @@ PromptProof/
 │   ├── behavioral/            # Scope, consistency, refusal, empathy
 │   ├── operational/           # Efficiency, error handling, formatting
 │   ├── user-protection/       # Privacy, accessibility, content warnings
-│   └── output/                # Structured output, citations, diffs
+│   ├── output/                # Structured output, citations, diffs
+│   └── rag/                   # RAG pipeline guards (retrieval, citation, access control)
 ├── profiles/                  # Pre-built guard combinations
 ├── tools/                     # CLI utilities
 │   ├── combine.py             # Guard combiner with token budgets
