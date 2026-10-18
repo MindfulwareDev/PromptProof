@@ -9,12 +9,12 @@
 [![GitHub forks](https://img.shields.io/github/forks/MindfulwareDev/PromptProof?style=social)](https://github.com/MindfulwareDev/PromptProof/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/MindfulwareDev/PromptProof)](https://github.com/MindfulwareDev/PromptProof/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/MindfulwareDev/PromptProof)](https://github.com/MindfulwareDev/PromptProof/commits/main)
-[![Guards](https://img.shields.io/badge/guards-80%2B-brightgreen)](https://github.com/MindfulwareDev/PromptProof/tree/main/guards)
+[![Guards](https://img.shields.io/badge/guards-80-brightgreen)](https://github.com/MindfulwareDev/PromptProof/tree/main/guards)
 [![Profiles](https://img.shields.io/badge/profiles-8-orange)](https://github.com/MindfulwareDev/PromptProof/tree/main/profiles)
-[![Tests](https://img.shields.io/badge/adversarial_tests-44-red)](https://github.com/MindfulwareDev/PromptProof/tree/main/tests)
+[![Tests](https://img.shields.io/badge/adversarial_tests-49-red)](https://github.com/MindfulwareDev/PromptProof/tree/main/tests)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 
-*80+ guardrail prompts | 9 categories | 8 preset profiles | CLI tools | adversarial test suite*
+*80 guardrail prompts | 9 categories | 8 preset profiles | CLI tools | adversarial test suite*
 *OpenAI, Anthropic, Ollama, LangChain & LlamaIndex integrations*
 
 [Guards](#guard-library-guards) | [Tools](#tools-tools) | [Profiles](#preset-profiles-profiles) | [Tests](#adversarial-test-suite-tests) | [Integrations](#integration-templates-integrations)
@@ -34,22 +34,27 @@ PromptProof is a lightweight, plug-and-play guardrail pack for any LLM that repl
 ## What is PromptProof?
 
 - **Purpose** — An open-source system-prompt template library, licensed under GPL v3, that snaps into "Custom Instructions," API system messages, or any LLM configuration.
-- **What it does** — Forces the assistant to cite sources, label every unverified claim, separate facts from speculation, enforce ethical boundaries, and finish each reply with a self-estimated confidence score — so users always know what is certain and what is not.
-- **Why it matters** — By adding these guardrails, PromptProof reduces the risk of hallucinations, prompt injection, data leaks, and unethical outputs, giving everyday users a clear, transparent basis for trusting (or double-checking) AI answers.
+- **What it does** — Provides instructions for citing sources, distinguishing evidence from speculation, and respecting task boundaries. Model compliance varies; these prompts do not enforce permissions or guarantee truthful answers.
+- **Why it matters** — Makes desired behavior explicit and provides examples for evaluating it. Measure usefulness and failures in your own application; prompts are one layer alongside access controls and output validation.
 - **How to use** — Copy any prompt block into your LLM's settings or API setup, save, and start chatting with guardrails active. No extra software or coding is required. Mix and match guards to fit your needs.
 
-### Quick Start
+### Start with one useful task
+
+**No coding:** open [Prompt Injection Shield](guards/safety/01-prompt-injection-shield.md), copy its instructions into your assistant's configuration, and try a harmless summarization task. Review the answer. Custom instructions do not override the host's higher-priority rules.
+
+**Local tools:** from a checkout of this repository, use `python3` (or `python` if that is your Python 3 executable). These steps use only the standard library and make no model/API calls:
 
 ```bash
-# Lint your existing system prompt
-echo "You are a helpful assistant." | python tools/lint_prompt.py --stdin
-
-# Combine guards from a preset profile
-python tools/combine.py --profile developer --output my_prompt.txt
-
-# Run adversarial tests against your setup
-python tests/run_tests.py --provider openai --model gpt-4 --profile maximum-security --report
+python3 tools/combine.py --guards safety/01 quality/10 --output my_prompt.txt
+python3 tests/run_tests.py --dry-run
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
+
+Open `my_prompt.txt` and paste it into your assistant's configuration. Add more guards only when they address a concrete need. Token counts are character-based approximations, not provider tokenizer counts; more guards also cost context and may conflict.
+
+For developers: [current security guidance, reviewed October 18, 2026](docs/security-2026-10-18.md) explains application controls, model-evaluation limits, and six [manual agent/RAG scenarios](tests/scenarios/agent-rag-2026.json). The [review notes](docs/review-2026-10-18.md) list remaining work.
+
+Live benchmarks and provider demos are optional: they may transmit prompts to the provider and incur charges. Choose a model available to your account, review its SDK settings, and use synthetic data. Offline checks do not establish live compatibility or guard effectiveness.
 
 ---
 
@@ -81,7 +86,7 @@ python tests/run_tests.py --provider openai --model gpt-4 --profile maximum-secu
 
 ## Guard Library (`guards/`)
 
-70 guardrail prompts organized into 9 categories. Each guard is self-contained — copy it into your system prompt as-is, or combine multiple guards for layered protection.
+80 guardrail prompts organized into 9 categories. Each guard contains reusable instructions. Review them before copying or combining; names such as “sandbox” and “enforcer” describe intent, not implemented controls.
 
 ### Safety & Security (`guards/safety/`)
 
@@ -121,10 +126,10 @@ Guards that make AI decision-making visible and auditable.
 | # | File | Description |
 |---|------|-------------|
 | 15 | `decision-audit-trail.md` | Produces structured decision records showing options considered, rationale, and risk. |
-| 16 | `uncertainty-quantifier.md` | Replaces vague hedging with calibrated probability ranges and explicit uncertainty scales. |
+| 16 | `uncertainty-quantifier.md` | Explains uncertainty without unsupported probability ranges. |
 | 17 | `capability-boundary-disclosure.md` | Proactively discloses AI limitations at the point of relevance. |
 | 18 | `influence-disclosure.md` | Detects and discloses persuasion techniques and framing effects in user input. |
-| 19 | `confidence-calibration.md` | Produces well-calibrated confidence scores with domain and evidence adjustments. |
+| 19 | `confidence-calibration.md` | Communicates evidence limits without invented calibration percentages. |
 
 ### Domain-Specific (`guards/domain/`)
 
@@ -224,7 +229,7 @@ Guards specifically designed for RAG pipelines — ensuring retrieved context is
 | 77 | `knowledge-base-version-control.md` | Tracks and discloses the version state and freshness of the knowledge base used for retrieval. |
 | 78 | `multi-modal-retrieval-guard.md` | Handles non-text content (tables, images, diagrams, OCR) retrieved alongside text passages. |
 | 79 | `conversational-rag-memory-guard.md` | Manages context provenance across multi-turn RAG conversations, preventing memory contamination. |
-| 80 | `retrieval-access-control-enforcer.md` | Enforces document-level access controls, blocking unauthorized content from appearing in responses. |
+| 80 | `retrieval-access-control-enforcer.md` | Requires application-enforced access before retrieval; avoids unauthorized metadata disclosure. |
 
 ---
 
@@ -298,7 +303,7 @@ python tools/combine.py --profile researcher --budget standard
 
 ### Prompt Linter
 
-Analyzes any system prompt for common weaknesses and produces a scored security report. Works on any prompt — not just PromptProof guards.
+Searches a system prompt for common keywords and produces a weighted coverage report, not a security rating. Works on any prompt — not just PromptProof guards.
 
 ```bash
 # Lint a prompt file
@@ -338,7 +343,7 @@ python tools/benchmark.py --provider openai --model gpt-4 --profile developer --
 
 ## Adversarial Test Suite (`tests/`)
 
-44 adversarial test prompts across 8 categories, designed to probe LLM vulnerabilities:
+49 adversarial test prompts across 8 categories, designed to probe LLM vulnerabilities:
 
 | Category | Tests | What it probes |
 |----------|-------|----------------|
@@ -368,7 +373,7 @@ The HTML report shows before/after comparisons with per-category breakdowns and 
 
 ## Preset Profiles (`profiles/`)
 
-Pre-built guard combinations for common use cases. Each profile is a curated set of guards that work well together.
+Pre-built guard combinations for common use cases. Profiles are suggested combinations; review conflicting instructions and test them on your own tasks.
 
 | Profile | Guards | Focus |
 |---------|--------|-------|
@@ -376,10 +381,10 @@ Pre-built guard combinations for common use cases. Each profile is a curated set
 | `researcher` | 10 | Accuracy, citations, bias detection, intellectual rigor |
 | `educator` | 7 | Teaching-first approach, accessibility, cultural sensitivity |
 | `customer-support` | 9 | PII protection, emotional handling, multi-language, consistency |
-| `children` | 9 | Maximum safety, age-appropriate content, education |
+| `children` | 9 | Age-appropriate content guidance and education |
 | `healthcare` | 10 | Medical disclaimers, privacy, crisis handling, uncertainty |
 | `content-creator` | 8 | Accuracy, misinformation prevention, ethical content |
-| `maximum-security` | 15 | All safety guards active — for regulated environments |
+| `maximum-security` | 15 | Broad safety prompt bundle; not a compliance certification |
 
 ```bash
 # Use a profile with the combiner
@@ -393,7 +398,7 @@ python tools/benchmark.py --provider openai --model gpt-4 --profile maximum-secu
 
 ## Integration Templates (`integrations/`)
 
-Ready-to-use code for wiring PromptProof guards into popular LLM frameworks. Each template includes guard loading, profile support, streaming, and conversation history.
+Illustrative code for wiring PromptProof guards into popular LLM frameworks. Templates load guards and profiles; capabilities and SDK compatibility vary.
 
 | File | Provider | Dependencies |
 |------|----------|-------------|
@@ -403,11 +408,7 @@ Ready-to-use code for wiring PromptProof guards into popular LLM frameworks. Eac
 | `langchain_integration.py` | LangChain (any provider) | `pip install langchain langchain-openai` |
 | `llamaindex_integration.py` | LlamaIndex (RAG pipelines) | `pip install llama-index` |
 
-Each integration supports:
-- Loading single guards or full profiles
-- Streaming and non-streaming responses
-- Conversation history management
-- Interactive chat loop for testing
+Provider-specific demos include chat/streaming examples; the LangChain and LlamaIndex examples demonstrate framework usage. They are not production security middleware. Validate provider versions, model availability, timeouts and retention settings before use. In particular, indexing with a hosted embedding provider can transmit document contents.
 
 ```bash
 # Run the OpenAI integration demo
@@ -424,7 +425,7 @@ python integrations/ollama_integration.py
 
 Reference scores and generated reports live here.
 
-- `reference-scores.json` — Estimated effectiveness scores for each profile and individual guards across test categories. Use as a baseline to compare your own benchmark results.
+- `reference-scores.json` — Historical, unmeasured estimates retained for compatibility. Do not use as a baseline or evidence of effectiveness.
 - `report.html` — Generated by the test runner with `--report` flag. Visual before/after comparison.
 
 ---
@@ -449,7 +450,7 @@ PromptProof/
 │   ├── lint_prompt.py         # System prompt security linter
 │   └── benchmark.py           # Guard effectiveness benchmarker
 ├── tests/
-│   ├── adversarial/           # 44 adversarial test prompts (JSON)
+│   ├── adversarial/           # 49 adversarial test prompts (JSON)
 │   └── run_tests.py           # Test runner with HTML reporting
 ├── integrations/              # Drop-in code for OpenAI, Anthropic, Ollama, LangChain, LlamaIndex
 ├── benchmarks/                # Reference scores and generated reports

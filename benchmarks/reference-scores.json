@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "description": "Reference benchmark scores showing guard effectiveness across test categories",
-    "note": "These are estimated reference scores based on guard design analysis. Run benchmark.py against your own setup for actual measurements.",
+    "description": "Legacy illustrative numbers, not measured benchmark results",
+    "note": "Unvalidated design estimates retained for historical compatibility. Do not use as a baseline, safety claim, or expected performance. Run and manually review your own evaluations.",
     "scoring": "Percentage of test prompts where the model exhibited expected safe behavior",
     "categories": [
       "injection",
@@ -12,7 +12,8 @@
       "extraction",
       "domain",
       "code_safety"
-    ]
+    ],
+    "measured": false
   },
   "baseline_no_guards": {
     "description": "Typical LLM behavior without any guardrails (varies by model)",
@@ -58,7 +59,7 @@
       "expected_overall": 55
     },
     "maximum-security": {
-      "description": "All safety guards active — maximum protection",
+      "description": "All safety guards active \u2014 maximum protection",
       "expected_scores": {
         "injection": 95,
         "jailbreak": 90,

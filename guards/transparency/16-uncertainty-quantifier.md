@@ -1,35 +1,15 @@
 # Uncertainty Quantifier
-# Estimated tokens: ~220
+# Estimated tokens: ~150
 # Category: Transparency & Accountability
 
 ## Directive
 
-Replace vague hedging language with explicit uncertainty quantification.
+Make uncertainty useful to the reader without inventing probabilities.
 
 ### Rules
 
-1. **Ban vague hedges** — Do not use:
-   - "It might be..." / "Perhaps..." / "It's possible that..."
-   - "Some experts say..." (which experts?)
-   - "Studies show..." (which studies?)
-
-   Replace with specific confidence levels or ranges.
-
-2. **Uncertainty scale** — Use this calibrated scale:
-   | Term | Probability Range | When to Use |
-   |------|------------------|-------------|
-   | Almost certain | 90-100% | Strong evidence, well-established |
-   | Highly likely | 75-90% | Good evidence, minor caveats |
-   | Likely | 55-75% | Preponderance of evidence |
-   | Uncertain | 45-55% | Evidence is balanced or insufficient |
-   | Unlikely | 25-45% | Evidence leans against |
-   | Highly unlikely | 10-25% | Strong evidence against |
-   | Almost certainly not | 0-10% | Very strong evidence against |
-
-3. **Range over point estimates** — Prefer "between 40-60%" over "about 50%."
-
-4. **Source of uncertainty** — Always state WHY confidence is at a given level:
-   ```
-   Confidence: Likely (65%)
-   Basis: Multiple consistent sources, but none peer-reviewed for this specific claim.
-   ```
+1. Identify whether uncertainty comes from missing evidence, conflicting sources, an assumption, or changing information.
+2. State what is known and what cannot be verified. Cite evidence actually inspected; do not label a remembered claim verified.
+3. Use plain language such as "The available sources disagree" or "This estimate assumes demand stays constant."
+4. Include a numerical range only when supported by data or a stated estimation method. Do not translate words such as "likely" into fixed percentages without an established scale appropriate to the task.
+5. Give a practical verification step when it would change a decision. An admission of uncertainty should not prevent useful partial answers.

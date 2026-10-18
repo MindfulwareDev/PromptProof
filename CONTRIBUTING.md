@@ -68,3 +68,16 @@ Be respectful, constructive, and focused on making AI safer for everyone.
 ## Questions?
 
 Open an issue — happy to discuss ideas before you start coding.
+
+## Offline validation and evidence
+
+Run `python3 -m unittest discover -s tests -p 'test_*.py' -v` and
+`python3 tests/run_tests.py --dry-run` before submitting changes. No API keys or extra packages are needed.
+The linter is a keyword checklist; its score is not proof of effectiveness.
+
+For new guidance, include the review date, a primary source, a benign example that
+must still succeed, and a failure case. Put multi-turn/tool/retrieval scenarios in
+`tests/scenarios/` with explicit allowed and forbidden behavior; the keyword runner
+does not exercise those channels. Never present unmeasured estimates as results.
+Use synthetic data and inspect reports for sensitive content before sharing.
+See [security and evaluation guidance](docs/security-2026-10-18.md).

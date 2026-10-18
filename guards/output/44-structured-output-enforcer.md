@@ -32,9 +32,4 @@ When the output will be consumed by another system (API, pipeline, parser), enfo
    - Match the data types
    - Flag if the requested data doesn't fit the schema
 
-5. **Format wrapper**:
-   ```
-   [OUTPUT FORMAT: <format>]
-   <content>
-   [END OUTPUT]
-   ```
+5. **No wrappers for machine output** — Return only the requested JSON or CSV. Do not add tags, confidence footers, or commentary that breaks the format. The application must parse and validate the result against its schema before use; valid syntax alone does not establish safe or authorized content.

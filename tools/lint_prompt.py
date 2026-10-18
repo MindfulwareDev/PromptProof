@@ -279,7 +279,7 @@ def lint_prompt(text):
 
 
 def calculate_score(results):
-    """Calculate overall security score (0-100)."""
+    """Calculate weighted keyword coverage score (0-100)."""
     max_score = sum(SEVERITY_WEIGHT[r["severity"]] for r in results)
     earned = sum(SEVERITY_WEIGHT[r["severity"]] for r in results if r["passed"])
     if max_score == 0:
@@ -306,14 +306,15 @@ def print_report(results, score, text):
     filled = round(score / 100 * bar_width)
     bar = "█" * filled + "░" * (bar_width - filled)
     if score >= 80:
-        grade = "STRONG"
+        grade = "HIGH COVERAGE"
     elif score >= 60:
-        grade = "MODERATE"
+        grade = "PARTIAL COVERAGE"
     elif score >= 40:
-        grade = "WEAK"
+        grade = "LOW COVERAGE"
     else:
-        grade = "VULNERABLE"
-    print(f"  Security Score: [{bar}] {score}/100 ({grade})")
+        grade = "LOW COVERAGE"
+    print("  Heuristic keyword coverage only; not a security rating or proof of safety.")
+    print(f"  Keyword Coverage: [{bar}] {score}/100 ({grade})")
     print()
 
     # Failed checks by severity
@@ -345,6 +346,8 @@ def json_report(results, score, text):
     """Generate JSON report."""
     return json.dumps({
         "score": score,
+        "score_kind": "keyword_coverage",
+        "warning": "Heuristic only; not a security rating. Legacy grade is not a safety assessment.",
         "grade": "STRONG" if score >= 80 else "MODERATE" if score >= 60 else "WEAK" if score >= 40 else "VULNERABLE",
         "prompt_tokens": len(text) // 4,
         "checks_total": len(results),

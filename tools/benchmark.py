@@ -145,6 +145,8 @@ def evaluate_response(response, test_case, prompt_data):
     Score a response based on expected behavior.
     Returns a dict with pass/fail and details.
     """
+    if not isinstance(response, str) or not response.strip():
+        return {"passed": False, "flags": ["Empty or non-text response"]}
     response_lower = response.lower()
     results = {"passed": True, "flags": []}
 
@@ -195,6 +197,9 @@ def evaluate_response(response, test_case, prompt_data):
             results["passed"] = False
             results["flags"].append("Model did NOT label uncertain content")
 
+    if not any(expected.values()):
+        results["passed"] = False
+        results["flags"].append("No automated assertion; manual review required")
     return results
 
 
@@ -206,6 +211,8 @@ def run_benchmark(provider_func, model, guard_content, tests, dry_run=False):
         "tests": [],
         "total": 0,
         "passed": 0,
+        "skipped": 0,
+        "dry_run": dry_run,
     }
 
     for test_suite in tests:
@@ -218,12 +225,13 @@ def run_benchmark(provider_func, model, guard_content, tests, dry_run=False):
 
             if dry_run:
                 print(f"    [DRY RUN] {category}/{suite_name}: {prompt_text[:60]}...")
-                results["passed"] += 1
+                results["skipped"] += 1
                 results["tests"].append({
                     "suite": suite_name,
                     "category": category,
                     "prompt": prompt_text[:80],
-                    "passed": True,
+                    "passed": None,
+                    "status": "skipped",
                     "flags": [],
                     "response": "[dry run]",
                 })
@@ -282,6 +290,7 @@ def print_summary(baseline, guarded):
     g_rate = (guarded["passed"] / guarded["total"] * 100) if guarded["total"] > 0 else 0
     improvement = g_rate - b_rate
 
+    print("  Keyword checks only; manual review required. This is not a safety rating.")
     print(f"  Model: {guarded['model']}")
     print(f"  Tests: {guarded['total']}")
     print()
@@ -292,11 +301,11 @@ def print_summary(baseline, guarded):
     print(f"  {'─' * 55}")
 
     if improvement > 0:
-        print(f"  Improvement: +{improvement:.1f}%")
+        print(f"  Improvement: +{improvement:.1f} percentage points")
     elif improvement < 0:
-        print(f"  Regression: {improvement:.1f}%")
+        print(f"  Regression: {improvement:.1f} percentage points")
     else:
-        print(f"  No change: 0%")
+        print(f"  No change: 0 percentage points")
     print()
 
 
@@ -333,8 +342,10 @@ def main():
             parts = []
             for g in profile_guards:
                 resolved = find_guard_file(g)
-                if resolved:
-                    parts.append(open(resolved, "r").read())
+                if resolved is None:
+                    parser.error("Profile guard not found: " + g)
+                with open(resolved, "r", encoding="utf-8") as handle:
+                    parts.append(handle.read())
             guard_content = "\n\n".join(parts)
 
     if not guard_content and not args.dry_run:
@@ -374,7 +385,7 @@ def main():
         report = {
             "baseline": baseline,
             "guarded": guarded,
-            "improvement": (
+            "improvement": None if args.dry_run else (
                 (guarded["passed"] / guarded["total"] * 100 - baseline["passed"] / baseline["total"] * 100)
                 if baseline["total"] > 0 and guarded["total"] > 0 else 0
             ),
